@@ -19,6 +19,6 @@ int main()
   {
   execve("/bin/sh", argv, envp);
   }
-  printf("done")
+  printf("done");
     while (true) {sleep(120); }
 }
