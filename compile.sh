@@ -1,5 +1,5 @@
 #!/bin/sh
 mkdir bin
 
-gcc zinit/main.c -j$(nproc) -o ./bin/init
-gcc zshell/main.c -j$(nproc) -o ./bin/zshell
+gcc zinit/main.c -o ./bin/init &
+gcc zshell/main.c -o ./bin/zshell &
