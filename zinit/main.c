@@ -14,12 +14,11 @@ int main()
   pid_t pid2 = getpid();
   if (pid1 == pid2)
   {
-    execve("/bin/sh", argv2, envp);
+    while (true) {sleep(120); }
   }
   else
   {
   execve("/bin/sh", argv, envp);
   }
   printf("done");
-    while (true) {sleep(120); }
 }
