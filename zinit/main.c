@@ -2,18 +2,19 @@
 #include <unistd.h>
 #include <sys/types.h>
 
-    char *argv[] = {"sh", "-c", "/etc/zinit/enabled/*", NULL};
+    char *argv[] = {"sh", "-c", "/etc/zinit/init/*", NULL};
     char *envp[] = {NULL};
+
+    char *argv2[] = {"sh", NULL};
 
 int main()
 {
   pid_t pid1 = getpid();
-  //printf("%d\n", pid1);
   fork();
   pid_t pid2 = getpid();
-  //printf("%d\n", pid2);
   if (pid1 == pid2)
   {
+    execve("/bin/sh", argv2, envp);
   }
   else
   {
