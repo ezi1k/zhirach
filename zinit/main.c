@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 
-    char *argv[] = {"sh", "-c", "/etc/zinit/init/*", NULL};
+    char *argv[] = {"sh", "-c", "/etc/init.z/*", NULL};
     char *envp[] = {NULL};
 
     char *argv2[] = {"sh", NULL};
