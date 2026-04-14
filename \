@@ -18,7 +18,8 @@ int main()
   }
   else
   {
-  execvp(argv2[0], argv2);
+  pthread_create()
+  execve("/bin/sh", argv, envp);
   }
   printf("done");
 }
