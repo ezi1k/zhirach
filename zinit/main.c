@@ -3,43 +3,60 @@
 #include <unistd.h>
 #include <signal.h>
 #include <sys/wait.h>
-#include <string.h>
 
 static volatile sig_atomic_t stop = 0;
-static const char *cmd = "/etc/init.z/*";
+static const char *scripts_path = "/etc/init.z/*";
+static const char *shell_path = "/bin/zshell";
 
-void term(int s){ (void)s; stop = 1; }
+void handle_signal(int sig) {
+    (void)sig;
+    stop = 1;
+}
 
-int main(void){
-    pid_t child = -1;
-    signal(SIGTERM, term);
-    signal(SIGINT, term);
-    while(!stop){
-        if ((child = fork()) < 0){
-            sleep(1);
-            continue;
-        }
-        if (child == 0){
-            signal(SIGTERM, SIG_DFL);
-            execlp("sh","sh","-c",cmd,(char*)NULL);
-            _exit(127);
-        }
-        int status;
-        while(!stop){
-            pid_t w = waitpid(child, &status, 0);
-            if (w == child) break;
-            if (w < 0) break;
-        }
-        if (!stop){
-            sleep(1);
-        } else {
-            kill(child, SIGTERM);
-            sleep(1);
-            kill(child, SIGKILL);
-            waitpid(child, NULL, 0);
-        }
+pid_t run_process(const char *path, char *const argv[]) {
+    pid_t pid = fork();
+    if (pid < 0) return -1;
+    if (pid == 0) {
+        setsid();
+        signal(SIGTERM, SIG_DFL);
+        signal(SIGINT, SIG_DFL);
+        execv(path, argv);
+        _exit(127);
     }
+    return pid;
+}
+
+int main(void) {
+    pid_t pid_init = -1;
+    pid_t pid_shell = -1;
+
+    signal(SIGTERM, handle_signal);
+    signal(SIGINT, handle_signal);
+
+    char *shell_args[] = {(char *)shell_path, "-i", NULL};
+    char *init_args[] = {"/bin/sh", "-c", (char *)scripts_path, NULL};
+
+    while (!stop) {
+        if (pid_init <= 0) pid_init = run_process("/bin/sh", init_args);
+        if (pid_shell <= 0) pid_shell = run_process(shell_path, shell_args);
+
+        int status;
+        pid_t w = waitpid(-1, &status, WNOHANG);
+
+        if (w > 0) {
+            if (w == pid_init) pid_init = -1;
+            if (w == pid_shell) pid_shell = -1;
+        }
+
+        if (stop) break;
+        usleep(200000);
+    }
+
+    if (pid_init > 0) kill(pid_init, SIGTERM);
+    if (pid_shell > 0) kill(pid_shell, SIGTERM);
+
     return 0;
 }
+
 
 
