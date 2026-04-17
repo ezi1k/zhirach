@@ -53,5 +53,10 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# shit
 bin/*
 bin
+
+kernelshit1337/*
+kernelshit1337
