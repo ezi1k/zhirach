@@ -6,7 +6,7 @@ cd kernelshit1337
 git clone https://github.com/torvalds/linux --depth 1
 
 cd linux
-
+git pull
 make defconfig
 
 echo "skachack gta5$(nproc)"
