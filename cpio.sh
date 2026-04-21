@@ -1,9 +1,11 @@
 #!/bin/sh
-export hugedick="$(pwd)"
+export govno="$(pwd)"
 
 cd fs
-find . | cpio -H newc -o >"$hugedick/bin/cpio/init.cpio"
+rm $govno/kernelshit1337/init.cpio
+find . | cpio -H newc -o >"$govno/kernelshit1337/init.cpio"
 
-cd $hugedick/kernelshit1337/linux/
+cd $govno/kernelshit1337/linux/
 
-make isoimage FDARGS="initrd=/init.cpio" FDINITRD="$hugedick/kernelshit1337/init.cpio"
+make isoimage FDARGS="initrd=/init.cpio" FDINITRD="$govno/kernelshit1337/init.cpio" -j$(nproc)
+echo "$govno"

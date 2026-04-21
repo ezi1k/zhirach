@@ -1,0 +1,53 @@
+  DESCEND objtool
+  INSTALL libsubcmd_headers
+  CC      arch/x86/boot/version.o
+  LD      arch/x86/boot/compressed/vmlinux
+/usr/bin/ld: предупреждение: невозможно найти символ входа startup_64; используем значение по умолчанию 0000000000c20b80
+/usr/bin/ld: arch/x86/boot/compressed/misc.o: в функции «serial_putchar»:
+misc.c:(.text+0x62): undefined reference to `early_serial_base'
+/usr/bin/ld: misc.c:(.text+0x7c): undefined reference to `early_serial_base'
+/usr/bin/ld: arch/x86/boot/compressed/misc.o: в функции «__putstr»:
+misc.c:(.text+0x2b22): undefined reference to `early_serial_base'
+/usr/bin/ld: arch/x86/boot/compressed/misc.o: в функции «decompress_kernel»:
+misc.c:(.text+0x31ac): undefined reference to `error'
+/usr/bin/ld: misc.c:(.text+0x31b8): undefined reference to `error'
+/usr/bin/ld: misc.c:(.text+0x31c4): undefined reference to `error'
+/usr/bin/ld: misc.c:(.text+0x31d0): undefined reference to `error'
+/usr/bin/ld: misc.c:(.text+0x31dc): undefined reference to `error'
+/usr/bin/ld: arch/x86/boot/compressed/misc.o: в функции «extract_kernel»:
+misc.c:(.text+0x321b): undefined reference to `cmdline_find_option_bool'
+/usr/bin/ld: misc.c:(.text+0x3229): undefined reference to `cmdline_find_option_bool'
+/usr/bin/ld: misc.c:(.text+0x32b9): undefined reference to `console_init'
+/usr/bin/ld: misc.c:(.text+0x32c5): undefined reference to `get_rsdp_addr'
+/usr/bin/ld: misc.c:(.text+0x3431): undefined reference to `trampoline_32bit'
+/usr/bin/ld: misc.c:(.text+0x34b5): undefined reference to `error'
+/usr/bin/ld: misc.c:(.text+0x34ec): undefined reference to `cleanup_exception_handling'
+/usr/bin/ld: misc.c:(.text+0x35eb): undefined reference to `error'
+/usr/bin/ld: misc.c:(.text+0x35f7): undefined reference to `error'
+/usr/bin/ld: misc.c:(.text+0x3603): undefined reference to `error'
+/usr/bin/ld: misc.c:(.text+0x360f): undefined reference to `error'
+/usr/bin/ld: arch/x86/boot/compressed/string.o: в функции «memcpy»:
+string.c:(.text+0x579): undefined reference to `warn'
+/usr/bin/ld: arch/x86/boot/compressed/kaslr.o: в функции «kaslr_get_random_long»:
+kaslr.c:(.text+0x414): undefined reference to `has_cpuflag'
+/usr/bin/ld: kaslr.c:(.text+0x455): undefined reference to `has_cpuflag'
+/usr/bin/ld: kaslr.c:(.text+0x4b6): undefined reference to `has_cpuflag'
+/usr/bin/ld: kaslr.c:(.text+0x556): undefined reference to `has_cpuflag'
+/usr/bin/ld: kaslr.c:(.text+0x568): undefined reference to `has_cpuflag'
+/usr/bin/ld: arch/x86/boot/compressed/kaslr.o:kaslr.c:(.text+0x5a9): далее есть ещё неопределённые ссылки на «has_cpuflag»
+/usr/bin/ld: arch/x86/boot/compressed/kaslr.o: в функции «choose_random_location»:
+kaslr.c:(.text+0xa68): undefined reference to `cmdline_find_option_bool'
+/usr/bin/ld: kaslr.c:(.text+0xa79): undefined reference to `__pgtable_l5_enabled'
+/usr/bin/ld: kaslr.c:(.text+0xafb): undefined reference to `get_cmd_line_ptr'
+/usr/bin/ld: kaslr.c:(.text+0xb25): undefined reference to `get_cmd_line_ptr'
+/usr/bin/ld: kaslr.c:(.text+0xcc8): undefined reference to `warn'
+/usr/bin/ld: kaslr.c:(.text+0x1200): undefined reference to `warn'
+/usr/bin/ld: kaslr.c:(.text+0x1211): undefined reference to `warn'
+/usr/bin/ld: kaslr.c:(.text+0x12f4): undefined reference to `error'
+/usr/bin/ld: kaslr.c:(.text+0x1142): undefined reference to `warn'
+/usr/bin/ld: arch/x86/boot/compressed/vmlinux: скрытый символ «cleanup_exception_handling» не определён
+/usr/bin/ld: final link failed: некорректное значение
+make[3]: *** [arch/x86/boot/compressed/Makefile:116: arch/x86/boot/compressed/vmlinux] Ошибка 1
+make[2]: *** [arch/x86/boot/Makefile:96: arch/x86/boot/compressed/vmlinux] Ошибка 2
+make[1]: *** [arch/x86/Makefile:311: isoimage] Ошибка 2
+make: *** [Makefile:248: __sub-make] Ошибка 2
